@@ -1,0 +1,52 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Python application test with Github Actions
+
+# Controls when the workflow will run
+on: [push]
+  # Triggers the workflow on GIT push or pull request events but only for the main branch
+  #push:
+  #  branches: [ main ]
+  #pull_request:
+  #  branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  #workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner environment that the job will run on, it can be tighted to a particular environment
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # Runs a single command using the runners shell
+    - name: Set up Python 3.5
+      uses: actions/setup-python@v1
+      with: 
+        python-version: 3.5
+
+    # Runs a set of commands using the runners shell
+    - name: Install solution dependencies and requirements
+      run: |
+        make install
+
+    # Runs a set of commands using the runners shell
+    - name: Lint with Python Pylint
+      run: |
+        make lint
+
+    # Runs a set of commands using the runners shell
+    - name: Test with Python Pytest
+      run: |
+        make test
+
+    # Runs a set of commands using the runners shell
+    - name: Format code with Python black
+      run: |
+        make format
